@@ -6,11 +6,26 @@ import {
   updatePerson,
 } from "./services/persons";
 
+import "./index.css"
+
+
 const Filter = ({ filter, handleFilter }) => (
   <div>
     filter show with a <input value={filter} onChange={handleFilter} />
   </div>
 );
+
+const Notification = ({ message, className }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className={className}>
+      {message}
+    </div>
+  )
+}
 
 const Form = ({
   handleFormSubmit,
@@ -47,6 +62,8 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     getAll().then((initialPersons) => setPersons(initialPersons));
@@ -92,13 +109,23 @@ const App = () => {
           );
           setNewName("");
           setNewNumber("");
-        });
+        })
+        .catch(error => {
+          setErrorMessage(`Information of ${findPerson.name} has already been removed from server`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
       }
     } else {
       createPerson(newPerson).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
+        setSuccessMessage(`Added ${newPerson.name}`)
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
       });
     }
   };
@@ -116,6 +143,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={successMessage} className={"success"}/>
+      <Notification message={errorMessage} className={"error"}/>
       <Filter filter={filter} handleFilter={handleFilter} />
       <h2>add a new</h2>
       <Form
