@@ -1,4 +1,6 @@
 const Blog = require("../models/blog");
+const User = require("../models/user");
+const bcrypt = require('bcrypt')
 
 const initialBlogs = [
   {
@@ -36,7 +38,7 @@ const initialBlogs = [
     author: "Robert C. Martin",
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
     likes: 2,
-  }  
+  }
 ]
 
 const nonExistingId = async () => {
@@ -52,4 +54,40 @@ const blogsInDb = async () => {
   return blogs.map(blog => blog.toJSON())
 }
 
-module.exports = { initialBlogs, nonExistingId, blogsInDb }
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map(user => user.toJSON())
+}
+
+const initialUsers = [
+  {
+    username: "root",
+    name: "Superuser",
+    passwordHash: bcrypt.hashSync("StrongAdminPassword", 10)
+  },
+  {
+    username: "enmanuelurena",
+    name: "Enmanuel Urena",
+    passwordHash: bcrypt.hashSync("DevPassword", 10)
+  }
+]
+
+const blogUser = {
+  username: "enmanuelurena",
+  name: "Enmanuel Urena",
+  password: "DevPassword"
+}
+
+async function getUserApiToken(api){
+  await api
+  .post('/api/users')
+  .send(blogUser)
+
+  let authUser = await api
+  .post('/api/login')
+  .send({username: blogUser.username, password: blogUser.password})
+
+  return authUser.body.token
+}
+
+module.exports = { initialBlogs, nonExistingId, blogsInDb, usersInDb, initialUsers, getUserApiToken }
