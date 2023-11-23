@@ -45,6 +45,11 @@ blogsRouter.delete("/:id", middleware.userExtractor, async (request, response) =
 
   const blog = await Blog.findById(BlogId)
 
+  if(!blog)
+  {
+    return response.status(404).end()
+  }
+
   if(!(blog.user.toString() === user._id.toString())){
     return response.status(401).json({error: "unauthorized user"})
   }
@@ -54,9 +59,11 @@ blogsRouter.delete("/:id", middleware.userExtractor, async (request, response) =
 
 blogsRouter.put("/:id", async (request, response) => {
   const id = request.params.id;
+  
   if (!request.body.title || !request.body.url) {
     return response.status(400).end();
   }
+
   const newBlog = request.body
   const updatedBlog = await Blog.findByIdAndUpdate(id, newBlog, { new: true });
   return response.json(updatedBlog);
