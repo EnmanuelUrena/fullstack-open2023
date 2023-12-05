@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1701438833044" clover="3.2.0">
+  <project timestamp="1701438833044" name="All files">
+    <metrics statements="7" coveredstatements="4" conditionals="4" coveredconditionals="1" methods="4" coveredmethods="1" elements="15" coveredelements="6" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
+    <file name="Blog.jsx" path="/home/enma/proyectos/fullstack-open2023/part5/bloglist-frontend/src/components/Blog.jsx">
+      <metrics statements="7" coveredstatements="4" conditionals="4" coveredconditionals="1" methods="4" coveredmethods="1"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="35" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>

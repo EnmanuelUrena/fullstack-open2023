@@ -1,31 +1,4 @@
 import { useState } from 'react'
-import BlogForm from './BlogForm'
-import Togglable from './Toggable'
-
-const Blogs = ({
-  blogs,
-  handleNewBlog,
-  blogFormRef,
-  handleLikes,
-  handleRemove,
-  user,
-}) => (
-  <div>
-    <Togglable buttonLabel={'create new blog'} ref={blogFormRef}>
-      <BlogForm handleNewBlog={handleNewBlog} />
-    </Togglable>
-    <p></p>
-    {blogs.map((blog) => (
-      <Blog
-        key={blog.id}
-        blog={blog}
-        handleLikes={handleLikes}
-        handleRemove={handleRemove}
-        user={user}
-      />
-    ))}
-  </div>
-)
 
 const Blog = ({ blog, handleLikes, handleRemove, user }) => {
   const blogStyle = {
@@ -40,7 +13,7 @@ const Blog = ({ blog, handleLikes, handleRemove, user }) => {
     setView(!view)
   }
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog-container">
       {!view ? (
         <>
           {blog.title} {blog.author} <button onClick={toggleView}>view</button>
@@ -57,7 +30,7 @@ const Blog = ({ blog, handleLikes, handleRemove, user }) => {
             <button onClick={() => handleLikes(blog)}>like</button>
           </div>
           <div>{blog.user?.name}</div>
-          {blog.user?.username === user.username && (
+          {blog.user?.username === user?.username && (
             <div>
               <button onClick={() => handleRemove(blog)}>remove</button>
             </div>
@@ -68,4 +41,4 @@ const Blog = ({ blog, handleLikes, handleRemove, user }) => {
   )
 }
 
-export default Blogs
+export default Blog
