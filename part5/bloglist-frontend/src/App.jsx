@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Blogs } from './components/Blogs'
+import  Blogs  from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import LoginInfo from './components/LoginInfo'
@@ -67,6 +67,7 @@ const App = () => {
         user: {
           id: blog.user,
           name: user.name,
+          username: user.username
         },
       }
       setBlogs(blogs.concat(blogWithUser))
@@ -99,6 +100,7 @@ const App = () => {
         user: {
           id: blogToUpdate.user,
           name: user.name,
+          username: user.username
         },
       }
       await blogService.update(blogToUpdate.id, blogToUpdate)
@@ -142,7 +144,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div data-test-id="main">
       {user === null ? (
         <>
           <h2>Log in to application</h2>
